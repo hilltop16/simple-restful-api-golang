@@ -6,6 +6,19 @@ import (
 	"net/http"
 )
 
+type Person struct {
+	id string `json:"id"`
+	firstName string `json:"firstName"`
+	lastName string `json:"lastName"`
+	address *Address `json:"address"`
+}
+
+type Address struct {
+	city string `json:"city"`
+	state string `json:"state"`
+
+}
+
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/people", getPeopleEndpoint).Methods("GET")
