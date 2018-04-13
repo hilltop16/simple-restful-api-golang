@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"encoding/json"
 )
 
 type Person struct {
@@ -19,8 +20,12 @@ type Address struct {
 
 }
 
+var people []Person
+
 func main() {
 	router := mux.NewRouter()
+	people = append(people, Person{id: "1", firstName:"John", lastName:"Doe", address:&Address{city:"Chicago", state:"IL"}})
+	people = append(people, Person{id: "2", firstName:"Ruby", lastName:"Rails"})
 	router.HandleFunc("/people", getPeopleEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", getPersonEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", createPersonEndpoint).Methods("post")
@@ -29,7 +34,7 @@ func main() {
 }
 
 func getPeopleEndpoint(w http.ResponseWriter, req *http.Request) {
-
+	json.NewEncoder(w).Encode(people)
 }
 
 func getPersonEndpoint(w http.ResponseWriter, req *http.Request) {
