@@ -8,15 +8,16 @@ import (
 )
 
 type Person struct {
-	id string `json:"id"`
-	firstName string `json:"firstName"`
-	lastName string `json:"lastName"`
-	address *Address `json:"address"`
+	// json keys have to be capital letter
+	ID string `json:"id"`
+	Firstname string `json:"firstname"`
+	Lastname string `json:"lastname"`
+	Address *Address `json:"address"`
 }
 
 type Address struct {
-	city string `json:"city"`
-	state string `json:"state"`
+	City string `json:"city"`
+	State string `json:"state"`
 
 }
 
@@ -24,8 +25,8 @@ var people []Person
 
 func main() {
 	router := mux.NewRouter()
-	people = append(people, Person{id: "1", firstName:"John", lastName:"Doe", address:&Address{city:"Chicago", state:"IL"}})
-	people = append(people, Person{id: "2", firstName:"Ruby", lastName:"Rails"})
+	people = append(people, Person{ID: "1", Firstname:"John", Lastname:"Doe", Address:&Address{City:"Chicago", State:"IL"}})
+	people = append(people, Person{ID: "2", Firstname:"Ruby", Lastname:"Rails"})
 	router.HandleFunc("/people", getPeopleEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", getPersonEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", createPersonEndpoint).Methods("post")
