@@ -49,7 +49,7 @@ func getPersonEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(&Person{})
 }
 
-func createPersonEndpoint(w http.ResponseWriter, req *http.Request) {
+func deletePersonEndpoint(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	for index, item := range people {
 		if item.ID == params["id"] {
@@ -60,8 +60,13 @@ func createPersonEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(people)
 }
 
-func deletePersonEndpoint(w http.ResponseWriter, req *http.Request) {
-
+func createPersonEndpoint(w http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	var person Person
+	_ = json.NewDecoder(req.Body).Decode(&person)
+	person.ID = params["id"]
+	people = append(people, person)
+	json.NewEncoder(w).Encode(people)
 }
 
 
